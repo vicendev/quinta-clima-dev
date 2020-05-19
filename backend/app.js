@@ -1,55 +1,52 @@
-const path = require("path");
-const express = require('express');
-const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
+const app = require("./app-server");
+const debug = require("debug")("node-angular");
+const http = require("http");
 
-const tagsRoutes = require("./routes/tagRoute");
-const worksDoneRoutes = require("./routes/worksDoneRoute");
-const authRoutes = require("./routes/authRoute");
-const mailRoutes = require("./routes/mailRoute");
-const offerRoutes = require("./routes/offerRoute");
-const offerConditionsRoutes = require("./routes/offerconditionsRoute");
+const normalizePort = val => {
+  var port = parseInt(val, 10);
 
-const app = express();
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
 
-//mongodb://QCDB_admin:N5P=Mqs2H+P6r1f$7{As@mongodb.guebs.net:27017/ch12048_QCDB
-mongoose.connect("mongodb://localhost:27017/QCdb", { useNewUrlParser: true , useUnifiedTopology: true })
-//mongoose.connect("mongodb+srv://admin:GVb8jDlmoPUrUw8c@cluster0-sujbd.mongodb.net/test?retryWrites=true&w=majority")
-.then(() =>{
-    console.log('Connected to database');
-})
-.catch(() => {
-    console.log("Error to connected database")
-});
+  if (port >= 0) {
+    // port number
+    return port;
+  }
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use("/images", express.static(path.join(__dirname, "images")));
-app.use("/documents", express.static(path.join(__dirname, "documents")));
-app.use("/", express.static(path.join(__dirname, "angular")));
+  return false;
+};
 
+const onError = error => {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+};
 
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PATCH, PUT, DELETE, OPTIONS"
-    );
-    next();
-  });
-  
-app.use("/api/worksdone", worksDoneRoutes);
-app.use("/api/tags", tagsRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/mail", mailRoutes);
-app.use("/api/offer", offerRoutes);
-app.use("/api/offerConditionsRoutes", offerConditionsRoutes);
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "angular", "index.html"));
-})
+const onListening = () => {
+  const addr = server.address();
+  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
+  debug("Listening on " + bind);
+};
 
-module.exports = app;
+const port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
+
+const server = http.createServer(app);
+server.on("error", onError);
+server.on("listening", onListening);
+server.listen(port);

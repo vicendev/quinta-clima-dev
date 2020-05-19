@@ -1,0 +1,25 @@
+<div class="container-fluid h-100 site" id="app">
+  
+  <div class="row header bg-general">
+    <div class="col-12">
+      <app-header></app-header>
+    </div>
+  </div>
+
+  <div class="row content" id="goTop">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 content-margin">
+          <router-outlet (activate)="ScrollTop($event)"></router-outlet>
+        </div>
+      </div>
+
+      <div class="row footer">
+        <div class="col-12 m-0 footer-margin">
+          <app-footer></app-footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

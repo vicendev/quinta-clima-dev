@@ -1,0 +1,48 @@
+<div class="row" id="header">
+  <div class="col-12 pl-0" *ngIf="innerWidth > mobileResolution">
+
+    <div class="row">
+      <div class="col-12 text-center margin-img">
+          <img class="img-fluid border-logo c-pointer" src="assets/img/logo.webp" [routerLink]="['/']">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mr-5 text-right">
+        <img class="img-fluid top-offer c-pointer" src="assets/img/oferta.png" [routerLink]="['/offers']">
+      </div>
+    </div>
+    
+    <div class="row" *ngIf="userIsAuthenticated">
+      <div class="col-12 text-center">
+        <a mat-button routerLink="/dashboard" routerLinkActive="mat-accent">Dashboard</a>
+        <button mat-button (click)="onLogout()">Logout</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-12 pl-0" *ngIf="mobileResolution >= innerWidth">
+
+    <div class="row">
+      <div class="col-12 text-center margin-img">
+        <img class="img-fluid border-logo c-pointer" src="assets/img/logo_mobile.webp" [routerLink]="['/list-works']">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mr-5 text-right">
+        <img class="img-fluid top-offer c-pointer" src="assets/img/oferta_mobile.png" [routerLink]="['/offers']">
+      </div>
+    </div>
+    
+    <div class="row" *ngIf="userIsAuthenticated">
+      <div class="col-12 text-center">
+        <a mat-button routerLink="/dashboard" routerLinkActive="mat-accent">Dashboard</a>
+        <button mat-button (click)="onLogout()">Logout</button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,51 @@
+<div class="row no-gutters" id="services" *ngIf="loadList">
+  <div class="col-12">
+   
+    <div class="row m-0 ml-2 mt-4" >
+      <div class="col-12">
+        <i class="back fa fa-arrow-left" [routerLink]="['/']" aria-hidden="true"> {{'label.back' | translate}}</i>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listWorks && listWorks.length === 0">
+      <div class="col-12 text-center">
+        <span>{{'label.no.services' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listWorks && listWorks.length > 0 && innerWidth > mobileResolution">
+      <div class="col-12 category">
+        <div class="row m-0 mt-2 mb-2" (click)="selectService(ser)" [routerLink]="['/service']" *ngFor="let ser of listWorks">
+          <div class="col-3">
+            <img class="img-select" [src]="ser.img">
+          </div>
+          <div class="col-9 bg-title">
+            <span class="select-item title-category">{{ser.name | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listWorks && listWorks.length > 0 && mobileResolution >= innerWidth">
+      <div class="col-12 category" *ngFor="let ser of listWorks">
+        <div class="row m-0 mt-2 mb-2" (click)="selectService(ser)" [routerLink]="['/service']">
+          <div class="col-6 offset-3">
+            <img class="img-select" [src]="ser.img">
+          </div>
+        </div>
+        <div class="row m-0 mt-3 mb-3" (mouseup)="selectService(ser)" [routerLink]="['/service']">
+          <div class="col-12 bg-title">
+            <span class="select-item title-category">{{ser.name | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="h-100" *ngIf="!loadList">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

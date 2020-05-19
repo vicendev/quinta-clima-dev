@@ -1,0 +1,62 @@
+<div class="row" id="service" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row m-0 ml-2 mt-4" >
+      <div class="col-12">
+        <i class="back fa fa-arrow-left" [routerLink]="['/list-services']" aria-hidden="true"> {{'label.back' | translate}}</i>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listCarousel.length === 0 ">
+      <div class="col-12 text-center">
+        <span>{{'label.no.services' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listCarousel.length > 0">
+      <div class="col-12 mt-4 mb-4">
+        
+        <ngb-carousel>
+
+          <ng-template ngbSlide  *ngFor="let item of listCarousel; let i=index">
+            <div class="picsum-img-wrapper">
+              <img [src]="item.thumb" (click)="open(i)" class="img-carousel img-pointer">
+            </div>
+            <div class="carousel-caption">
+              <h3 class="tag-title" (click)="onViewTag(item.tagId)"># {{item.tag}}</h3>
+              <p>{{item.caption}}</p>
+            </div>
+          </ng-template>
+
+        </ngb-carousel>
+        <h5 class="text-center">Click para ver imagen completa &nbsp;<i class="fa fa-hand-pointer-o anim-pointer" aria-hidden="true"></i></h5>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #modal_display_tag let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">ver los tag de # nombredeltag</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    Esta seguro de ver los trabajos de # nombredeltag
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.dismiss()">Close</button>
+    <button type="button" class="btn btn-primary">Save</button>
+  </div>
+
+</ng-template>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

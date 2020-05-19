@@ -1,0 +1,10 @@
+#footer{
+    background: #f4791f;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left,#0083B0 ,#f4791f );  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #0083B0, #f4791f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#footer .contact-font{
+    font-size: 22px;
+    cursor: pointer;
+}

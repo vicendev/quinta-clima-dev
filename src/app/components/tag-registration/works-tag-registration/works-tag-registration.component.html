@@ -1,0 +1,49 @@
+<div class="row no-gutters" id="workstags" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row m-0 ml-2 mt-4" >
+      <div class="col-12">
+        <i class="back fa fa-arrow-left" [routerLink]="['/tag-registration']" aria-hidden="true"> {{'label.back' | translate}}</i>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-2">
+        <h2>Cliente #{{title}}</h2>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listCarousel.length === 0 ">
+      <div class="col-12 text-center">
+        <span>{{'label.no.services' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listCarousel.length > 0">
+      <div class="col-12 mt-4 mb-4">
+        
+        <ngb-carousel>
+
+          <ng-template ngbSlide  *ngFor="let item of listCarousel; let i=index">
+            <div class="picsum-img-wrapper">
+              <img [src]="item.src" (click)="open(i)" class="img-carousel img-pointer">
+            </div>
+            <div class="carousel-caption">
+              <h3># {{item.tag}}</h3>
+              <p>{{item.caption}}</p>
+            </div>
+          </ng-template>
+
+        </ngb-carousel>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div class="row" id="tag-registration" *ngIf="pageLoad">
+  <div class="col-12">
+
+    <div class="row m-0 ml-2 mt-4" >
+      <div class="col-12">
+        <i class="back fa fa-arrow-left" [routerLink]="['/']" aria-hidden="true"> {{'label.back' | translate}}</i>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-2">
+        <h2>Trabajos realizados</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+        matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+
+          <!-- Content Column -->
+          <ng-container matColumnDef="tag">
+            <mat-header-cell *matHeaderCellDef># Tag</mat-header-cell>
+            <mat-cell *matCellDef="let row"># {{row.content}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="view">
+            <mat-header-cell *matHeaderCellDef>Ver</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="select-item">
+                <button type="button" (click)="onView(row)" class="btn btn-primary">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="h-100" *ngIf="!pageLoad">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

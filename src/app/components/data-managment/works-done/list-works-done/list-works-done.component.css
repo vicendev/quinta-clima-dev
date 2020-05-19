@@ -1,0 +1,39 @@
+#list-works-done ::ng-deep .ui-dropdown{
+    width: 305px;
+    height: auto;
+}
+
+#list-works-done .tableImages{
+    width: 100px;
+    height: auto;
+}
+
+#list-works-done ::ng-deep .mat-cell{
+    display:flex !important;
+    justify-content:center!important;
+}
+
+
+#list-works-done ::ng-deep .mat-header-cell{
+    display:flex !important;
+    justify-content:center!important;
+}
+
+@media only screen and (max-width: 1024px){
+
+    #list-works-done .tableImages{
+        width: 50px;
+        height: auto;
+    }
+    
+    #list-works-done ::ng-deep .mat-header-cell{
+        display:flex !important;
+        justify-content:left!important;
+    }
+
+    #list-works-done ::ng-deep .mat-cell{
+        display:flex !important;
+        justify-content:left!important;
+    }
+    
+}

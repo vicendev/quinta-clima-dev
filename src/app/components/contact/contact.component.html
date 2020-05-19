@@ -1,0 +1,157 @@
+<div class="row" id="contact">
+  <div class="col-12">
+
+    <div class="row m-0 ml-2 mt-4" >
+      <div class="col-12">
+        <i class="back fa fa-arrow-left" [routerLink]="['/']" aria-hidden="true"> {{'label.back' | translate}}</i>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 text-center mt-2">
+        <h2>Contacto</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center">
+
+        <form #form="ngForm" (ngSubmit)="sendEmail(form)">
+          <div class="row form-group">
+
+            <div class="col-md-6 col-12 form-group">
+              <label for="name">Nombre (*)</label>
+              <input type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              placeholder="Escribe un nombre..."
+              minlength="3"
+              required
+              [(ngModel)]="name"
+              [ngClass]="{
+                'is-valid': name.dirty && !name.errors,
+                'is-invalid': name.dirty && name.errors
+              }">
+
+              <div class="valid-feedback">
+                <span>¡Correcto!</span>
+              </div>
+
+              <div class="invalid-feedback">
+                <span *ngIf="name.errors?.required">Valor Requerido</span>
+                <span *ngIf="name.errors?.minlength">Se necesitan minimo {{name.errors?.minlength.requiredLength}}
+                   caracteres y llevas {{name.errors?.minlength.actualLength}}</span>
+              </div>
+
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+              <label for="surname">Apellido (*)</label>
+              <input type="text"
+              class="form-control"
+              name="surname"
+              id="surname"
+              placeholder="Escribe tus apellidos..."
+              minlength="3"
+              required
+              [(ngModel)]="surname"
+              [ngClass]="{
+                'is-valid': surname.dirty && !surname.errors,
+                'is-invalid': surname.dirty && surname.errors
+              }">
+
+              <div class="valid-feedback">
+                <span>¡Correcto!</span>
+              </div>
+
+              <div class="invalid-feedback">
+                <span *ngIf="surname.errors?.required">Valor Requerido</span>
+                <span *ngIf="surname.errors?.minlength">Se necesitan minimo {{surname.errors?.minlength.requiredLength}}
+                   caracteres y llevas {{surname.errors?.minlength.actualLength}}</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row form-group">
+
+            <div class="col-md-6 col-12 form-group">
+              <label for="email">Correo (*)</label>
+              <input type="text"
+              class="form-control"
+              name="email"
+              id="email"
+              placeholder="Escribe tu email..."
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              required
+              [(ngModel)]="email"
+              [ngClass]="{
+                'is-valid': email.dirty && !email.errors,
+                'is-invalid': email.dirty && email.errors
+              }">
+
+              <div class="valid-feedback">
+                <span>¡Correcto!</span>
+              </div>
+
+              <div class="invalid-feedback">
+                <span *ngIf="email.errors?.required">Valor Requerido</span>
+                <span *ngIf="email.errors?.pattern">El formato no es correcto</span>
+              </div>
+
+            </div>
+
+            <div class="col-md-6 col-12 form-group">
+              <label for="sex">Tipo de trabajo (*)</label>
+              <select class="custom-select is-valid" 
+              name="works" 
+              id="works"
+              [(ngModel)]="works">
+                <option value="Climatizacion">Climatizacion</option>
+                <option value="Habilitacion_Departamento">Habilitacion Departamento</option>
+                <option value="Obras_Civiles">Obras Civiles</option>
+              </select>
+
+              <div class="valid-feedback">
+                <span>¡Correcto!</span>
+              </div>
+              
+              <div class="invalid-feedback">
+                <span *ngIf="!works.value">Valor Requerido</span>
+              </div>
+
+            </div>
+          </div>
+
+            <div class="row form-group">
+              <div class="col-12 form-group text-center">
+                <label for="message">Mensaje</label>
+                <textarea 
+                name="message" 
+                class="form-control" 
+                rows="4"
+                cols="50"
+                id="message"
+                required
+                minlength="50" 
+                placeholder="Escribe el contenido del mensaje..."
+                [(ngModel)]="message"></textarea>
+              </div>
+  
+            </div>
+
+          <div class="row">
+            <div class="col-12 mb-4">
+              <button [disabled]="form.invalid" type="submit" class="btn btn-primary btn-block">Enviar</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

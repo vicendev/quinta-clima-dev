@@ -1,0 +1,34 @@
+#list-offers .tableImages{
+    width: 100px;
+    height: auto;
+}
+
+#list-offers ::ng-deep .mat-cell{
+    display:flex !important;
+    justify-content:center!important;
+}
+
+
+#list-offers ::ng-deep .mat-header-cell{
+    display:flex !important;
+    justify-content:center!important;
+}
+
+@media only screen and (max-width: 1024px){
+
+    #list-offers .tableImages{
+        width: 50px;
+        height: auto;
+    }
+    
+    #list-offers ::ng-deep .mat-header-cell{
+        display:flex !important;
+        justify-content:left!important;
+    }
+
+    #list-offers ::ng-deep .mat-cell{
+        display:flex !important;
+        justify-content:left!important;
+    }
+    
+}

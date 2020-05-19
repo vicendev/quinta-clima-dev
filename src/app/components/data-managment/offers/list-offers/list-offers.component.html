@@ -1,0 +1,130 @@
+<div class="row" id="list-offers" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h2>Lista de ofertas</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-2 mb-2">
+
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+        matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+
+          <!-- Content Column -->
+          <ng-container matColumnDef="imagePath">
+            <mat-header-cell *matHeaderCellDef>Imagen</mat-header-cell>
+            <mat-cell id="image-cell" *matCellDef="let row">
+              <img class="tableImages" [src]="row.imagePath" lightbox alt="">
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="documentPath">
+            <mat-header-cell *matHeaderCellDef>Documento</mat-header-cell>
+            <mat-cell id="image-cell" *matCellDef="let row">
+             <a [href]="row.documentPath" target="__blank" >Ver</a>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{(row.title.length > 25)? (row.title | slice:0:25)+'...':(row.title)}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef>Precio</mat-header-cell>
+            <mat-cell *matCellDef="let row">$ {{row.price}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="created">
+            <mat-header-cell *matHeaderCellDef>Creado</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.created}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef>Eliminar</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="select-item">
+                <button type="button" (click)="openDeleteModal(row)" class="btn btn-danger">
+                  <i class="fa fa-trash-o"  aria-hidden="true"></i>
+                </button>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef>Editar</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="select-item">
+                <button type="button" (click)="openEditModal(row)" class="btn btn-primary">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        
+        <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #modal_delete_workdone let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">¿Eliminar esta imagen?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    Esta imagen será eliminada del sistema.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Cerrar</button>
+    <button type="button" (click)="onDelete()" class="btn btn-danger">Eliminar</button>
+  </div>
+
+</ng-template>
+
+<ng-template #modal_edit_workdone let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">¿Editar esta imagen?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    Puede editar el contenido en su totalidad.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Cerrar</button>
+    <button type="button" (click)="onEdit()" class="btn btn-primary">Editar</button>
+  </div>
+
+</ng-template>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

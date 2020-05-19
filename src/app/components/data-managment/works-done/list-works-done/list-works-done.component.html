@@ -1,0 +1,160 @@
+<div class="row no-gutters" id="list-works-done">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <h2>Lista de trabajos realizados</h2>
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-12">
+
+        <div class="row">
+          <div class="col-12 mb-2">
+            <h6>Tipo de trabajo</h6>
+
+            <p-dropdown [options]="worksDropdown" [(ngModel)]="workSelected" (onChange)="ddWorks()"
+              name="works" maxlength="10">
+              <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label | translate}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label | translate}}</div>
+                  </div>
+              </ng-template>
+            </p-dropdown>
+
+          </div>
+        </div>
+
+        <div class="row" *ngIf="ddWorkCheck">
+          <div class="col-12 mb-2">
+            <h6>Tipo de servicio</h6>
+
+            <p-dropdown [options]="servicesDropdown" [(ngModel)]="serviceSelected" (onChange)="ddServices()"
+              name="services">
+              <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label | translate}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label | translate}}</div>
+                  </div>
+              </ng-template>
+            </p-dropdown>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row" *ngIf="ddServiceCheck">
+      <div class="col-12 mt-2 mb-2">
+
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+        matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+
+          <!-- Content Column -->
+          <ng-container matColumnDef="imagePath">
+            <mat-header-cell *matHeaderCellDef>Imagen</mat-header-cell>
+            <mat-cell id="image-cell" *matCellDef="let row">
+              <img class="tableImages" [src]="row.imagePath" lightbox alt="">
+            </mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{(row.description.length > 25)? (row.description | slice:0:25)+'...':(row.description)}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="tagDesc">
+            <mat-header-cell *matHeaderCellDef># Tag</mat-header-cell>
+            <mat-cell *matCellDef="let row"># {{(row.tagDesc.length > 25)? (row.tagDesc | slice:0:25)+'...':(row.tagDesc)}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="created">
+            <mat-header-cell *matHeaderCellDef>Creado</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.created}}</mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef>Eliminar</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="select-item">
+                <button type="button" (click)="openDeleteModal(row)" class="btn btn-danger">
+                  <i class="fa fa-trash-o"  aria-hidden="true"></i>
+                </button>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Created Column -->
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef>Editar</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="select-item">
+                <button type="button" (click)="openEditModal(row)" class="btn btn-primary">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal_delete_workdone let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">¿Eliminar esta imagen?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    Esta imagen será eliminada del sistema.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Cerrar</button>
+    <button type="button" (click)="onDelete()" class="btn btn-danger">Eliminar</button>
+  </div>
+
+</ng-template>
+
+<ng-template #modal_edit_workdone let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">¿Editar esta imagen?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    Puede editar el contenido en su totalidad.
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Cerrar</button>
+    <button type="button" (click)="onEdit()" class="btn btn-primary">Editar</button>
+  </div>
+
+</ng-template>

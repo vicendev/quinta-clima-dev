@@ -1,0 +1,130 @@
+<div class="row" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-2">
+        <h2>Agregar Oferta</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+
+        <form #form="ngForm" (ngSubmit)="addOffer(form)">
+
+          <div class="row form-group">
+            <div class="col-12">
+              <h6>Escoge una imagen</h6>
+              <p-fileUpload mode="advanced" customUpload="true" 
+              accept=".jpg,.png,.jpeg"
+              (uploadHandler)="onUploadHandler($event)"
+              (onRemove)="removeItem()" (onClear)="removeItem()"
+              chooseLabel="{{'label.choose.files' | translate}}"
+              uploadLabel="Cargar"
+              cancelLabel="{{'label.cancel.files' | translate}}"></p-fileUpload>
+            </div>
+          </div>
+
+          <div class="row form-group" *ngIf="uploadFile">
+            <div class="col-12">
+              <h6>Escoge un documento de condiciones</h6>
+              <p-fileUpload mode="advanced" customUpload="true" 
+              accept=".pdf"
+              (uploadHandler)="onUploadFileHandler($event)"
+              (onRemove)="removeFileItem()" (onClear)="removeFileItem()"
+              chooseLabel="{{'label.choose.files' | translate}}"
+              uploadLabel="{{'label.upload.files' | translate}}"
+              cancelLabel="{{'label.cancel.files' | translate}}"></p-fileUpload>
+            </div>
+          </div>
+
+          <div class="row form-group" *ngIf="uploadDoc && uploadFile">
+            <div class="col-6">
+
+              <label for="title">Titulo</label>
+              <input type="text"
+              class="form-control"
+              name="title"
+              id="title"
+              placeholder="Escribe un título..."
+              minlength="3"
+              required
+              [(ngModel)]="title"
+              [ngClass]="{
+                'is-valid': title.dirty && !title.errors,
+                'is-invalid': title.dirty && title.errors
+              }">
+
+              <div class="valid-feedback">
+                <span>¡Correcto!</span>
+              </div>
+
+              <div class="invalid-feedback">
+                <span *ngIf="title.errors?.required">Valor Requerido</span>
+                <span *ngIf="title.errors?.minlength">Se necesitan minimo {{title.errors?.minlength.requiredLength}}
+                   caracteres y llevas {{title.errors?.minlength.actualLength}}</span>
+              </div>
+              
+            </div>
+
+            <div class="col-6">
+              <label for="price">Precio</label>
+              <input type="text" inputmode="numeric"  pKeyFilter="pint" 
+              name="price" [(ngModel)]="price" id="price"
+              (keyup)="formatInputNumber()"  class="form-control"
+              [ngClass]="{'is-valid': price.dirty && !price.invalid, 'is-invalid': price.dirty && price.invalid}">
+
+              <div class="valid-feedback">
+                <span>!Correcto!</span>
+              </div>
+    
+              <div class="invalid-feedback">
+                <span *ngIf="price.errors?.required">Valor requerido</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row" *ngIf="uploadDoc && uploadFile">
+            <div class="col-12 mb-2">
+              <button [disabled]="form.invalid" type="submit" class="btn btn-block btn-primary">Subir Oferta</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #modal_new_form let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">¿Desea agregar mas trabajos?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="navigateTo()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <p>Si desea agregar mas ofertas, presione <strong>SI</strong> para reiniciar el formulario</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="resetForm()" data-dismiss="modal">Si</button>
+    <button type="button" class="btn btn-secondary" (click)="navigateTo()" data-dismiss="modal">No</button>
+  </div>
+
+</ng-template>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

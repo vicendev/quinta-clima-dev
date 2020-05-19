@@ -1,0 +1,95 @@
+{
+    "categories":[
+        {
+            "id":"c001",
+            "name":"label.air.conditioning",
+            "img": "assets/img/climate_control/air_conditioned.webp",
+            "services": [
+                {
+                    "id": "c001s001",
+                    "name": "label.renewable.energy",
+                    "img": "assets/img/climate_control/renowable_energy.webp"
+                },
+                {
+                    "id": "c001s002",
+                    "name": "label.air",
+                    "img": "assets/img/climate_control/air_conditioned_install.webp"             
+                },
+                {
+                    "id": "c001s003",
+                    "name": "label.heating",
+                    "img": "assets/img/climate_control/boiler_room_system.webp"              
+                }
+            ]
+        },
+        {
+            "id": "c002",
+            "name": "label.assembly.departament.clearance",
+            "img": "assets/img/installation_apartment/installation_apartment.webp",
+            "services": [
+                {
+                    "id": "c002s001",
+                    "name": "label.installation.curtain.rods",
+                    "img": "assets/img/installation_apartment/curtain_rod.webp"             
+                },
+                {
+                    "id": "c002s002",
+                    "name": "label.installation.luminary",
+                    "img": "assets/img/installation_apartment/luminary_installation.webp"               
+                },
+                {
+                    "id": "c002s003",
+                    "name": "label.installation.door.lock",
+                    "img": "assets/img/installation_apartment/door_lock.webp"             
+                },
+                {
+                    "id": "c002s004",
+                    "name": "label.installation.accesories",
+                    "img": "assets/img/installation_apartment/peephole.webp"              
+                }
+            ]
+        },
+        {
+            "id": "c003",
+            "name": "label.civil.works",
+            "img":"assets/img/civil_works/civil_works.webp",
+            "services": [
+                {
+                    "id": "c003s001",
+                    "name": "label.apartment.restoration",
+                    "img": "assets/img/civil_works/apartment_restoration.webp"               
+                },
+                {
+                    "id": "c003s002",
+                    "name": "label.furniture",
+                    "img": "assets/img/civil_works/forniture.webp"               
+                },
+                {
+                    "id": "c003s003",
+                    "name": "label.electricity",
+                    "img": "assets/img/civil_works/electricity.webp"             
+                },
+                {
+                    "id": "c003s004",
+                    "name": "label.painting",
+                    "img": "assets/img/civil_works/painting.webp"             
+                },
+                {
+                    "id": "c003s005",
+                    "name": "label.floor.change",
+                    "img": "assets/img/civil_works/floor_change.webp"              
+                },
+                {
+                    "id": "c003s006",
+                    "name": "label.partition.wall",
+                    "img": "assets/img/civil_works/partition_wall.webp"              
+                },
+                {
+                    "id": "c003s007",
+                    "name": "label.gas.plumbing",
+                    "img": "assets/img/civil_works/gas_plumbing.webp"             
+                }
+            ]
+        }
+    ]
+}

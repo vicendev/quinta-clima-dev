@@ -1,0 +1,4 @@
+#works-done ::ng-deep .ui-dropdown{
+    width: 305px;
+    height: auto;
+}

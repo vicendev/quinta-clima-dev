@@ -1,0 +1,111 @@
+<div class="row" id="editworksdone">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/add-worksdone']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h2>Editar trabajo realizado</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+
+        <form #form="ngForm" (ngSubmit)="editWorkDone(form)">
+
+          <div class="row form-group">
+            <div class="col-12">
+              <h6>Escoge una imagen</h6>
+              <p-fileUpload mode="advanced" customUpload="true"
+              accept=".jpg,.png,.jpeg" 
+              (uploadHandler)="onUploadHandler($event)"
+              (onRemove)="removeItems()" (onClear)="clearItems()"
+              chooseLabel="{{'label.choose.files' | translate}}"
+              uploadLabel="{{'label.upload.files' | translate}}"
+              cancelLabel="{{'label.cancel.files' | translate}}"></p-fileUpload>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p>Click o tocar, para ver imagen</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2 mb-3">
+              <img class="img-preview" lightbox [src]="imagePath" alt="">
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-12">
+              <h5>Escribe una descripción</h5>
+
+              <textarea class="form-control" [(ngModel)]="description" name="description" id="description" cols="50" rows="2"></textarea>
+
+              <h6># Hashtag / Tag Actual: #{{tagDesc}}</h6>
+              <p-dropdown #dd [options]="tagsDropdown" name="tags" filter="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+              </p-dropdown>
+  
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-2">
+              <button type="submit" class="btn btn-block btn-primary">{{'label.submit.edit.image' | translate }}</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #modal_info_form let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">Error de formulario</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    {{dataFormInfo}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Ok</button>
+  </div>
+
+</ng-template>
+
+<ng-template #modal_edit_information let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">Datos de edición</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    {{dataFormInfo}}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Ok</button>
+  </div>
+
+</ng-template>

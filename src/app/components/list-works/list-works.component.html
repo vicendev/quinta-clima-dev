@@ -1,0 +1,39 @@
+<div class="row no-gutters" id="works">
+  <div class="col-12">
+   
+    <div class="row" *ngIf="listWorks && listWorks.length === 0">
+      <div class="col-12 text-center">
+        <span>{{'label.no.categories' | translate}}</span>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listWorks && listWorks.length > 0 && innerWidth > mobileResolution">
+      <div class="col-12 category">
+        <div class="row m-0 mt-2 mb-2" (click)="selectCategory(cat)" [routerLink]="['/list-services']" *ngFor="let cat of listWorks">
+          <div class="col-3">
+            <img class="img-select" [src]="cat.img">
+          </div>
+          <div class="col-9 bg-title">
+            <span class="select-item title-category">{{cat.name | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="listWorks && listWorks.length > 0 && mobileResolution >= innerWidth">
+      <div class="col-12 category" *ngFor="let cat of listWorks">
+        <div class="row m-0 mt-2 mb-2" (click)="selectCategory(cat)" [routerLink]="['/list-services']">
+          <div class="col-6 offset-3">
+            <img class="img-select" [src]="cat.img">
+          </div>
+        </div>
+        <div class="row m-0 mt-3 mb-3" (mousedown)="selectCategory(cat)" [routerLink]="['/list-services']">
+          <div class="col-12 bg-title">
+            <span class="select-item title-category">{{cat.name | translate}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

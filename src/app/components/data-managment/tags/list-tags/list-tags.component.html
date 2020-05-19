@@ -1,0 +1,125 @@
+<div class="row no-gutters" id="list-tags" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <h2>Lista de tags</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-3 mb-3">
+
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                 matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+      
+            <!-- Content Column -->
+            <ng-container matColumnDef="content">
+              <mat-header-cell *matHeaderCellDef>Tag</mat-header-cell>
+              <mat-cell *matCellDef="let row"># {{row.content}}</mat-cell>
+            </ng-container>
+      
+            <!-- Created Column -->
+            <ng-container matColumnDef="created">
+              <mat-header-cell *matHeaderCellDef>Creado</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.date}}</mat-cell>
+            </ng-container>
+
+            <!-- Created Column -->
+            <ng-container matColumnDef="delete">
+              <mat-header-cell *matHeaderCellDef>Eliminar</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="select-item">
+                  <button type="button" (click)="openDeleteModal(row)" class="btn btn-danger">
+                    <i class="fa fa-trash-o"  aria-hidden="true"></i>
+                  </button>
+                </span>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Created Column
+            <ng-container matColumnDef="edit">
+              <mat-header-cell *matHeaderCellDef>Editar</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <span class="select-item">
+                  <button type="button" (click)="editTag(row)" class="btn btn-primary">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                </span>
+              </mat-cell>
+            </ng-container> -->
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+      
+        <mat-paginator [length]="resultsLength" [pageSize]="10"></mat-paginator>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal_delete_tag let-modal>
+
+        <div class="modal-header">
+          <h5 class="modal-title">¿Eliminar este tag?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"  (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <p>{{tagName}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="button" (click)="onDelete()" class="btn btn-primary">Si</button>
+              &nbsp;&nbsp;
+              <button type="button" (click)="modal.dismiss()" class="btn btn-danger">No</button>
+            </div>
+          </div>
+        </div>
+
+</ng-template>
+
+<ng-template #modal_count_images let-modal>
+
+    <div class="modal-header">
+      <h5 class="modal-title">Hay {{workdoneCount}} imagenes ligadas a este tag</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div *ngIf="workdoneCount > 0" class="modal-body">
+      <p>Puede escoger dos opciones</p>
+      <ol>
+        <li>Cambiar la descripcion a "# Sin Hashtag"</li>
+        <li>Eliminar <b>Todas</b> las fotos ligadas a este TAG</li>
+      </ol>
+    </div>
+    <div *ngIf="workdoneCount === 0" class="modal-body">
+      <p>No hay imagenes afectadas por este Tag</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modal.dismiss()">Cerrar</button>
+      <button type="button" *ngIf="workdoneCount > 0" class="btn btn-primary" (click)="onEditWorksDone()">Cambiar</button>
+      <button type="button" *ngIf="workdoneCount > 0" class="btn btn-danger" (click)="onDeleteWorksDone()">Eliminar</button>
+      <button type="button" *ngIf="workdoneCount === 0" class="btn btn-danger" (click)="onDeleteTag()">Eliminar</button>
+    </div>
+
+</ng-template>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

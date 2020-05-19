@@ -1,0 +1,56 @@
+<div class="row no-gutters" id="offers" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row m-0 mt-4" >
+      <div class="col-12">
+        <i class="back fa fa-arrow-left" [routerLink]="['/']" aria-hidden="true"> {{'label.back' | translate}}</i>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-2">
+        <h2>Ofertas</h2>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="offerList.length > 0">
+      <div class="col-12">
+          <p-carousel [value]="offerList" [numVisible]="4" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+            <ng-template let-offer pTemplate="item">
+                <div class="car-details">
+                    <div class="p-grid p-nogutter">
+                        <div class="p-col-12">
+                            <img class="img-select img-pointer" (click)="open(offer.index)" [src]="offer.src" />
+                        </div>
+                        <div class="p-col-12 mt-2 text-center">
+                            <h4>{{offer.title}}</h4>
+                            <a [href]="offer.docPath" target="__blank">Ver Condiciones</a>
+                            <h6>$ {{offer.price | currency: 'CLP':''}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+
+        <div class="row" *ngIf="offerList.length === 0 ">
+          <div class="col-12 text-center">
+            <span>No hay ofertas disponibles.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="h-100" *ngIf="!loadPage && offerList">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

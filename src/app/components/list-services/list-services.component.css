@@ -1,0 +1,29 @@
+#services .service{
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#services .title-service{
+    position: absolute;
+    top: 37%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Calistoga';
+}
+
+#services .back{
+    font-size: 32px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1024px){
+
+    #services .back{
+        font-size: 20px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,43 @@
+<div class="row no-gutters">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <h2>{{'label.add.tag.title' | translate}}</h2>
+      </div>
+    </div>
+
+    <form [formGroup]="formTags" (ngSubmit)="addTag()">
+
+      <div class="row form-group">
+        <div class="col-12">
+          <label for="content">{{'label.add.tag.content' | translate}}</label>
+          <input type="text" formControlName="content" id="content" class="form-control"
+          [ngClass]="{'is-valid': content.dirty && !content.invalid, 'is-invalid': content.dirty && content.invalid}">
+
+          <div class="valid-feedback">
+            <span>{{'label.success' | translate}}</span>
+          </div>
+
+          <div class="invalid-feedback">
+            <span *ngIf="content.errors?.required">{{'label.required' | translate}}</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-12">
+          <button [disabled]="formTags.invalid" type="submit" class="btn btn-block btn-primary">{{'label.add.tag' | translate}}</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

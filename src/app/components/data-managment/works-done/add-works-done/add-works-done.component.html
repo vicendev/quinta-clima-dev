@@ -1,0 +1,150 @@
+<div class="row no-gutters" id="works-done" *ngIf="loadPage">
+  <div class="col-12">
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <button type="button" [routerLink]="['/dashboard']" class="btn btn-primary">Atras</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        <h2>{{'label.add.images' | translate}}</h2>
+        <hr>
+      </div>
+    </div>
+
+    <div class="row no-gutters" *ngIf="uploadedFiles.length === 0">
+      <div class="col-12">
+
+        <div class="row">
+          <div class="col-12 mb-2">
+            <h6>Tipo de trabajo</h6>
+
+            <p-dropdown [options]="worksDropdown" [(ngModel)]="workSelected" (onChange)="ddWorks()"
+              name="works" maxlength="10">
+              <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label | translate}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label | translate}}</div>
+                  </div>
+              </ng-template>
+            </p-dropdown>
+
+          </div>
+        </div>
+
+        <div class="row" *ngIf="ddWorkCheck">
+          <div class="col-12 mb-2">
+            <h6>Tipo de servicio</h6>
+
+            <p-dropdown [options]="servicesDropdown" [(ngModel)]="serviceSelected" (onChange)="ddServices()"
+              name="services">
+              <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:middle; margin-left: .5em">{{item.label | translate}}</span>
+              </ng-template>
+              <ng-template let-car pTemplate="item">
+                  <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                      <div style="font-size:14px;float:right;margin-top:4px">{{car.label | translate}}</div>
+                  </div>
+              </ng-template>
+            </p-dropdown>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row no-gutters form-group" *ngIf="ddServiceCheck">
+      <div class="col-12 mt-3">
+        <h6>Porfavor selecciona las imagenes</h6>
+        <p>para volver a seleccionar una sección, limpie este panel.</p>
+        <p-fileUpload customUpload="true" 
+        multiple="multiple" (uploadHandler)="onUploadHandler($event)"
+        accept=".jpg,.png,.jpeg" 
+        (onRemove)="removeItems($event)" (onClear)="clearItems()" fileLimit="12"
+        chooseLabel="{{'label.choose.files' | translate}}"
+        uploadLabel="{{'label.upload.files' | translate}}"
+        cancelLabel="{{'label.cancel.files' | translate}}"></p-fileUpload>
+      </div>
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="addWorkDone(form)">
+
+      
+      <div class="row form-group" *ngIf="uploadedFiles.length > 0">
+        <div class="col-12">
+
+              <h5>Escribe una descripción para todas las imagenes</h5>
+
+              <textarea class="form-control" [(ngModel)]="description" name="description" id="description" cols="50" rows="2"></textarea>
+              
+              <h6># Hashtag</h6>
+              <p-dropdown #dd [options]="tagsDropdown" [(ngModel)]="tagSelected" name="tags" filter="true">
+                <ng-template let-item pTemplate="selectedItem">
+                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                </ng-template>
+                <ng-template let-car pTemplate="item">
+                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                        <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                    </div>
+                </ng-template>
+              </p-dropdown>
+
+        </div>
+      </div>
+
+      <div class="row" *ngIf="uploadedFiles.length > 0">
+        <div class="col-12 mb-2">
+          <button type="submit" class="btn btn-block btn-primary">{{'label.submit.add.images' | translate }}</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<ng-template #modal_info_form let-modal>
+
+        <div class="modal-header">
+          <h5 class="modal-title">Error de formulario</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          {{dataFormInfo}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modal.dismiss()" data-dismiss="modal">Ok</button>
+        </div>
+
+</ng-template>
+
+<ng-template #modal_new_form let-modal>
+
+  <div class="modal-header">
+    <h5 class="modal-title">¿Desea agregar mas trabajos?</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="navigateTo()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <p>Si desea agregar mas trabajos, presione <strong>SI</strong> para reiniciar el formulario</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="resetForm()" data-dismiss="modal">Si</button>
+    <button type="button" class="btn btn-secondary" (click)="navigateTo()" data-dismiss="modal">No</button>
+  </div>
+
+</ng-template>
+
+<div class="h-100" *ngIf="!loadPage">
+  <div class="spinner">
+    <img src="assets/img/spinner.gif">
+  </div>
+</div>

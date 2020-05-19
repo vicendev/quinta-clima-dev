@@ -15,12 +15,22 @@ const MIME_TYPE_MAP = {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
+        const url = req.get('host');
+        let repository = "";
+
+        if ( url == 'localhost:3000')
+        {
+            repository = "backend/images/offers"
+        } else {
+            repository = "images/offers"
+        }
+
         const isValid  = MIME_TYPE_MAP[file.mimetype];
         let error = new Error("Invalid mime type");
         if(isValid){
             error = null;
         }
-        cb(error, "backend/images/offers");
+        cb(error, repository);
     },
     filename: (req, file, cb) =>{
         const name = file.originalname.toLowerCase().split(' ').join('-');

@@ -159,7 +159,16 @@ router.delete("/:id", (req, res, next) => {
 
 router.post("/deleteImage", (req, res, next) => {
     try{
-        const backPath = "./backend/images/worksdone/"
+
+        const url = req.get('host');
+        let backPath = "";
+
+        if ( url == 'localhost:3000')
+        {
+            backPath = "./backend/images/worksdone/"
+        } else {
+            backPath = "./images/worksdone/"
+        }
 
         fs.unlinkSync(backPath + req.body.imagePath)
     } catch (error) {

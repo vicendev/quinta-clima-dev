@@ -1,4 +1,3 @@
-import { WorkService } from './../../../../services/work.service';
 import { WorksDoneService } from './../../../../services/works-done.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,6 +20,7 @@ export class ListTagsComponent implements OnInit, OnDestroy {
 
   @ViewChild("modal_delete_tag", {static: false}) modal_delete_tag;
   @ViewChild("modal_count_images", {static: false}) modal_count_images;
+  @ViewChild("modal_delete_no_tag", {static: false}) modal_delete_no_tag;
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -30,12 +30,15 @@ export class ListTagsComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Tag>;
 
   public tags: Tag[];
+  public countNoTag: number;
   public tagName: string;
   private tagsSub: Subscription;
+  private noTagsSub: Subscription;
   private _tagObj: Tag;
 
   private worksdoneSub: Subscription;
   private worksdone: WorksDone[];
+  private noTags: WorksDone[];
 
   public workdoneCount: number;
   public loadPage: boolean;
@@ -53,6 +56,12 @@ export class ListTagsComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
+
+    this.loadTags();
+    this.loadNoTag();
+  }
+
+  loadTags(){
     this.tagsService.getTags();
     this.tagsSub = this.tagsService.getTagsUpdateListener()
     .subscribe((tags: Tag[]) => {
@@ -64,11 +73,17 @@ export class ListTagsComponent implements OnInit, OnDestroy {
 
       this.loadPage = true;
     })
-
   }
 
-  editTag(tag: any){
-    console.log(tag)
+  loadNoTag(){
+
+    this.worksdoneService.getWorksDoneByTagId('none');
+    this.noTagsSub = this.worksdoneService.getWorksDoneByNoTagUpdateListener()
+    .subscribe((noTags: WorksDone[]) => {
+      this.noTags = noTags;
+      this.countNoTag = this.noTags.length;
+    });
+
   }
 
   openDeleteModal(tag: Tag){
@@ -111,6 +126,15 @@ export class ListTagsComponent implements OnInit, OnDestroy {
     this.tagsService.deleteTag(this._tagObj.id);
   }
 
+  openDeleteNoTagModal(){
+    this.modalService.open(this.modal_delete_no_tag);
+  }
+
+  onNoTagDelete(){
+    this.modalService.dismissAll();
+    this.deleteNoTagWorksDone();
+  }
+
   countImagesToDelete(){
     
     this.worksdoneService.getWorksDoneByTagId(this._tagObj.id);
@@ -120,6 +144,22 @@ export class ListTagsComponent implements OnInit, OnDestroy {
         this.workdoneCount = worksdone.length;
         this.worksdone = worksdone;
       });
+  }
+
+  deleteNoTagWorksDone(){
+
+    _.forEach(this.noTags, item => {
+
+      let indexString = item.imagePath.indexOf('worksdone/');
+      let imgToDelete = item.imagePath.substr(indexString + 10);
+
+      console.log(item.id);
+      this.worksdoneService.deleteWorkDone(item.id)
+      this.worksdoneService.deleteImageSource(imgToDelete);  
+    });
+
+    this.modalService.dismissAll();
+    this.countNoTag = 0;
   }
 
   ngOnDestroy(){

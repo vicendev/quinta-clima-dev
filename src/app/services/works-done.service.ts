@@ -15,6 +15,9 @@ export class WorksDoneService {
   private worksDone: WorksDone[];
   private worksDoneUpdated = new Subject<WorksDone[]>();
 
+  private worksDoneByNoTag: WorksDone[];
+  private worksDoneNoTagUpdated = new Subject<WorksDone[]>();
+
   private worksDoneByField: WorksDone[];
   private worksDoneByFieldUpdated = new Subject<WorksDone[]>();
 
@@ -70,8 +73,9 @@ export class WorksDoneService {
       })
     )
     .subscribe(transformedWorksDone => {
-      this.worksDoneByField = transformedWorksDone;
-      this.worksDoneByFieldUpdated.next([...this.worksDoneByField]);
+        this.worksDoneByField = transformedWorksDone;
+        this.worksDoneByFieldUpdated.next([...this.worksDoneByField]);
+
     });
   }
 
@@ -127,14 +131,24 @@ export class WorksDoneService {
         })
       )
       .subscribe(transformedWorksDone => {
-        this.worksDoneByField = transformedWorksDone;
-        this.worksDoneByFieldUpdated.next([...this.worksDoneByField]);
+        if (tagId != 'none') {
+          this.worksDoneByField = transformedWorksDone;
+          this.worksDoneByFieldUpdated.next([...this.worksDoneByField]);
+        } else {
+          this.worksDoneByNoTag = transformedWorksDone;
+          this.worksDoneNoTagUpdated.next([...this.worksDoneByNoTag]);
+        }
+
       });
 
   }
 
   getWorksDoneByTagIdUpdateListener() {
     return this.worksDoneByFieldUpdated.asObservable();
+  }
+
+  getWorksDoneByNoTagUpdateListener() {
+    return this.worksDoneNoTagUpdated.asObservable();
   }
 
   addWorksDone(worksdone: WorksDone, image: File){
